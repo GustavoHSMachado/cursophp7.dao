@@ -4,12 +4,18 @@
 	
 	require_once("config.php");
 	
-	$sql = new Sql();
+	/* $sql = new Sql();
 	
-	/* Usando o Metodo select da class Sql do arquivo de Conexão com BD para listar a tabela do BD */
+	// Usando o Metodo select da class Sql do arquivo de Conexão com BD para listar a tabela do BD \\
 	
 	$usuarios = $sql -> select("SELECT * FROM tb_usuarios");
 	
-	echo json_encode($usuarios);
+	echo json_encode($usuarios); */ 
+	
+	$root = new Usuario();
+	
+	$root -> loadById(3);
+	
+	echo $root;
 
 ?>

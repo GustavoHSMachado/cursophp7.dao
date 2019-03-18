@@ -71,6 +71,53 @@
 			}
 		}
 		
+		/* Método Criado para Carregar uma lista de Usuários */
+		
+		public static function getList() {
+		
+			$sql = new Sql();
+			
+			return $sql -> select("SELECT * FROM tb_usuarios ORDER BY deslogin;");
+		
+		}
+		
+		/* Método Criado para Carregar uma lista de usuários buscando pelo login */
+		
+		public static function search($login) {
+		
+			$sql = new Sql();
+			
+			return $sql -> select("SELECT * FROM tb_usuarios WHERE deslogin LIKE :SEARCH ORDER BY deslogin", 
+									array(':SEARCH' => "%" . $login . "%"));
+		
+		}
+		
+		/* Método Criado para Carregar uma lista de usuários usando o login e a senha */
+		
+		public function login($login, $password) {
+		
+			$sql = new Sql();
+			
+			$results = $sql -> select("SELECT * FROM tb_usuarios WHERE deslogin = :LOGIN AND dessenha = :PASSWORD", 
+										array(":LOGIN" => $login, ":PASSWORD" => $password));
+			
+			if (count ($results) > 0) {
+			
+				$row = $results[0];
+				
+				$this -> setIdusuario($row['idusuario']);
+				$this -> setDeslogin($row['deslogin']);
+				$this -> setDessenha($row['dessenha']);
+				$this -> setDtcadastro(new DateTime($row['dtcadastro']));
+			
+			} else {
+			
+				throw new Exception("Login e/ou senha inválidos.");
+			
+			}
+		
+		}
+		
 		/* Metodo Criado para imprimir as informações que foram passadas para o Objeto. */
 			
 		public function __toString() {

@@ -51,6 +51,8 @@
 		
 		}
 		
+		/* Metodo Criado para carregar as informações que vieram do BD por meio do campo ID que e a Chave Primaria, para o Objeto. */
+		
 		public function loadById($id) {
 		
 			$sql = new Sql();
@@ -68,6 +70,8 @@
 			
 			}
 		}
+		
+		/* Metodo Criado para imprimir as informações que foram passadas para o Objeto. */
 			
 		public function __toString() {
 			

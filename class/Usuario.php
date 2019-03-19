@@ -61,12 +61,7 @@
 			
 			if (count ($results) > 0) {
 			
-				$row = $results[0];
-				
-				$this -> setIdusuario($row['idusuario']);
-				$this -> setDeslogin($row['deslogin']);
-				$this -> setDessenha($row['dessenha']);
-				$this -> setDtcadastro(new DateTime($row['dtcadastro']));
+				$this -> setData($results[0]);
 			
 			}
 		}
@@ -103,18 +98,66 @@
 			
 			if (count ($results) > 0) {
 			
-				$row = $results[0];
-				
-				$this -> setIdusuario($row['idusuario']);
-				$this -> setDeslogin($row['deslogin']);
-				$this -> setDessenha($row['dessenha']);
-				$this -> setDtcadastro(new DateTime($row['dtcadastro']));
+				$this -> setData($results[0]);	
 			
 			} else {
 			
 				throw new Exception("Login e/ou senha inválidos.");
 			
 			}
+		
+		}
+		
+		/* Esse Método foi criado para melhorar o codigo para que não precise toda hora fazer os "$this -> set...", ai agora é só colocar 
+		 * após  o: "if (count ($results) > 0) { $this -> setData($results[0]); }".  */
+		
+		public function setData($data) {
+		
+			$this -> setIdusuario($data['idusuario']);
+			$this -> setDeslogin($data['deslogin']);
+			$this -> setDessenha($data['dessenha']);
+			$this -> setDtcadastro(new DateTime($data['dtcadastro']));
+		
+		}
+		
+		/* Método Criado para inserir dados no Banco de Dados por procedure(tem que ser criada dentro do BD) */
+		
+		public function insert() {
+		
+			$sql = new Sql();
+			
+			$results = $sql -> select("CALL sp_usuarios_insert(:LOGIN, :PASSWORD)", 
+										array(':LOGIN' => $this -> getDeslogin(), ':PASSWORD' => $this -> getDessenha()));
+			
+			if (count ($results) > 0) {
+			
+				$this -> setData($results[0]);	
+			
+			}
+		
+		}
+		
+		/* Método Construtor Criado para usar os setters de login e senha */
+		
+		public function __construct($login = "", $password = "") {
+		
+			$this -> setDeslogin($login);
+			$this -> setDessenha($password);
+		
+		}
+		
+		/* Método Criado para Atulizar(alterar) Dados no BD, identificando os dados a serem atulizados pelo ID */
+		
+		public function update($login, $password) {
+		
+			$this -> setDeslogin($login);
+			$this -> setDessenha($password);
+			
+			$sql = new Sql();
+			
+			$sql -> query("UPDATE tb_usuarios SET deslogin = :LOGIN, dessenha = :PASSWORD WHERE idusuario = :ID", array(
+							':LOGIN' => $this -> getDeslogin(), ':PASSWORD' => $this -> getDessenha(), ':ID' => $this -> getIdusuario()
+			));
 		
 		}
 		

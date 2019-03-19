@@ -40,11 +40,33 @@
 	echo json_encode($search);
 	*/
 	
+	/*
 	// Usando Método login para Carregar um usuário usando o login e a senha \\
 	
 	$usuario = new Usuario();
 	
 	$usuario -> login("root", "!@#$");
+	
+	echo $usuario;
+	*/
+	
+	/*
+	// Usando Método para Inserir informações no Banco de Dados (Criando um novo usuaário) \\
+	
+	$aluno = new Usuario("aluno", "@lun0");
+	
+	$aluno -> insert();
+	
+	echo $aluno;
+	*/
+	
+	// Usando Método update para Atualizar(alterando) os Dados no BD, identificando os dados a serem atulizados pelo ID \\
+	
+	$usuario = new Usuario();
+	
+	$usuario -> loadById(8);
+	
+	$usuario -> update("professor", "!@#$%¨&*");
 	
 	echo $usuario;
 

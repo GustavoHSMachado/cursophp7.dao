@@ -60,6 +60,7 @@
 	echo $aluno;
 	*/
 	
+	/*
 	// Usando Método update para Atualizar(alterando) os Dados no BD, identificando os dados a serem atulizados pelo ID \\
 	
 	$usuario = new Usuario();
@@ -67,6 +68,17 @@
 	$usuario -> loadById(8);
 	
 	$usuario -> update("professor", "!@#$%¨&*");
+	
+	echo $usuario;
+	*/
+	
+	// Usando Método delete para Apagar dados no Banco de Dados \\
+	
+	$usuario = new Usuario();
+	
+	$usuario -> loadById(7);
+	
+	$usuario -> delete();
 	
 	echo $usuario;
 

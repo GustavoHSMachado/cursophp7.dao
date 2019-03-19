@@ -161,6 +161,23 @@
 		
 		}
 		
+		/* Método Criado para Deletar dados no Banco de Dados */
+		
+		public function delete() {
+		
+			$sql = new Sql();
+			
+			/* Apagando no linha da tabela no Banco de Dados (BD) */
+			$sql -> query("DELETE FROM tb_usuarios WHERE idusuario = :ID", array(':ID' => $this -> getIdusuario()));
+			
+			/* Apagando(Limpando) os dados no Objeto */
+			$this -> setIdusuario(0);
+			$this -> setDeslogin("");
+			$this -> setDessenha("");
+			$this -> setDtcadastro(new DateTime());
+		
+		}
+		
 		/* Metodo Criado para imprimir as informações que foram passadas para o Objeto. */
 			
 		public function __toString() {
